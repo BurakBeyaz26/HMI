@@ -1,4 +1,4 @@
-QT += quick network serialport quickcontrols2
+QT += quick network serialport quickcontrols2 websockets core
 
 CONFIG += c++11
 
@@ -7,8 +7,11 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        datamanagement.cpp \
+        log.cpp \
         main.cpp \
-        serialcommunication.cpp
+        serialcommunication.cpp \
+        tcpsocketcommunication.cpp
 
 RESOURCES += qml.qrc
 
@@ -24,7 +27,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    serialcommunication.h
+    datamanagement.h \
+    log.h \
+    serialcommunication.h \
+    tcpsocketcommunication.h
 
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~üüüüNOTES

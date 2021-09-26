@@ -2,7 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
 
-#include "serialcommunication.h"
+#include "datamanagement.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -11,9 +12,6 @@ int main(int argc, char *argv[])
 #endif
 
     QQuickStyle::setStyle("Material");
-
-
-
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
@@ -25,8 +23,11 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-    SerialCommunication serialComm;
-    serialComm.initSerial();
+    DataManagement datamanage;
+    datamanage.SerialStart();
+    datamanage.SocketStart();
+
+
 
 
 
