@@ -1,2 +1,2 @@
 # HMI
-HMI communicate with PC over USB
+HMI communicate with PC
