@@ -33,7 +33,7 @@ HEADERS += \
     tcpsocketcommunication.h
 
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~üüüüNOTES
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~NOTES
 #   ls -l /dev/tty*
 #
 #
