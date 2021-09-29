@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Images/calendar.svg</file>
+        <file>Images/time.svg</file>
+        <file>Images/logout.svg</file>
+        <file>Images/settings.svg</file>
+    </qresource>
+</RCC>

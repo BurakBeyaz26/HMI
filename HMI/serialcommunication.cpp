@@ -12,7 +12,7 @@ SerialCommunication::~SerialCommunication()
 
 void SerialCommunication::initSerial()
 {
-    serial->setPortName("/dev/tty4");
+    serial->setPortName("/dev/tty2");
     serial->setBaudRate(QSerialPort::Baud9600);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);

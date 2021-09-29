@@ -13,7 +13,8 @@ SOURCES += \
         serialcommunication.cpp \
         tcpsocketcommunication.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    img.qrc
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

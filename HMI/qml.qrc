@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>StartScreen.qml</file>
+        <file>CommunicationScreen.qml</file>
     </qresource>
 </RCC>

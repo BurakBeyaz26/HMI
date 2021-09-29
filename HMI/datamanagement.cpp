@@ -54,11 +54,10 @@ void DataManagement::Identification_SystemControl(QString socketmessage, QJsonOb
 {
     qDebug() << "Appidentification SystemControl geldim";
 
-    QJsonObject identificationparameters =  jsonObject.value("message").toObject();
-    QString app = identificationparameters.value(QString("App")).toString();
-    QString systemname = identificationparameters.value(QString("SystemName")).toString();
-    QString devicename = identificationparameters.value(QString("DeviceName")).toString();
-    QString devicetype = identificationparameters.value(QString("DeviceType")).toString();
+    QString app = jsonObject.value(QString("App")).toString();
+    QString systemname = jsonObject.value(QString("SystemName")).toString();
+    QString devicename = jsonObject.value(QString("DeviceName")).toString();
+    QString devicetype = jsonObject.value(QString("DeviceType")).toString();
 
     isSocketOpened = true;
     ClientStates.Id = server->ConnectedClient.identification;
@@ -102,7 +101,7 @@ void DataManagement::Identification_SystemControl(QString socketmessage, QJsonOb
     }
 
     qDebug() << "System Model Checking...";
-    if(systemname == "Ankara")
+    if(systemname == "PC")
     {
         CorrectSystemFlag = true;
         qDebug() << "Correct System, System Model: " << systemname;
@@ -152,14 +151,17 @@ void DataManagement::ClientStateList()
 
 void DataManagement::MessageReceived(QString message)
 {
+        QString socketmessage;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(message.toUtf8());
         QJsonObject jsonObject = jsonDoc.object();
         QString topic = jsonObject.value(QString("topic")).toString();
-        QString socketmessage = jsonObject.value(QString("message")).toString();
+        QJsonObject messageObject =  jsonObject.value("message").toObject();
+
+        //socketmessage = jsonObject.value(QString("message")).toString();
 
         if(topic == "identification/SystemControl")
         {
-            Identification_SystemControl(socketmessage,jsonObject);
+            Identification_SystemControl(topic,messageObject);
         }
 
         else{
