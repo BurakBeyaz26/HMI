@@ -148,6 +148,68 @@ void DataManagement::ClientStateList()
 
 }
 
+void DataManagement::sendSocketMessageJson(QString type,QString topic,QString message)
+{
+
+    int order = -1;
+    QString ordername = "noone";
+    bool is_confirm = false;
+    int iteratorindex = 0;
+
+    auto clientsiterator = ClientStatesStore.begin();
+    while(clientsiterator != ClientStatesStore.end())
+    {
+        iteratorindex = std::distance(ClientStatesStore.begin(), clientsiterator);
+
+        if(clientsiterator->Id == type)
+        {
+            for(int i = 0;i < server->m_clients.size();i++)
+            {
+                QString objectmyname = server->m_clients.at(i)->objectName();
+                if(objectmyname == type)
+                {
+                    qDebug() << objectmyname;
+                    order = i;
+                    ordername = clientsiterator->Id;
+                    is_confirm = clientsiterator->State;
+                }
+            }
+            break;
+        }
+        else
+        {
+            *clientsiterator++;
+        }
+    }
+
+    if(is_confirm)
+    {
+        QString SocketMessage;
+
+            QJsonObject JsonMessagePackage;
+            JsonMessagePackage["topic"] = topic;
+            JsonMessagePackage["message"] = message;
+            QString strFromObj = QJsonDocument(JsonMessagePackage).toJson(QJsonDocument::Compact);
+            server->m_clients.at(order)->sendTextMessage(strFromObj);
+
+            if(!server->m_clients.at(order)->errorString().isNull())
+            {
+                log.logWork("SendSocketMessageJson - stringmessage - containmessage","true",SocketMessage,"send to --> "+ordername);
+                qDebug() << "send to --> "<< ordername;
+            }
+            else
+            {
+                log.logWork("SendSocketMessageJson - stringmessage - containmessage","false",SocketMessage,"error on send to --> "+ordername);
+                qDebug() << "error on send to --> "+ordername;
+            }
+
+    }
+    else
+    {
+        log.logWork("SendSocketMessageJson - stringmessage","false","Confirm: "+is_confirm,"error on send to --> "+ordername+" socket could be off --> undelivered topic: "+topic);
+        qDebug() << ordername << " socket could be off is_confirm: " << is_confirm << "undelivered topic: " << topic;
+    }
+}
 
 void DataManagement::MessageReceived(QString message)
 {

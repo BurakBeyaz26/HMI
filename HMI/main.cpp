@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <QQmlContext>
 
 #include "datamanagement.h"
 
@@ -10,6 +11,9 @@ int main(int argc, char *argv[])
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
+
+
+    DataManagement datamanage;
 
     QQuickStyle::setStyle("Material");
     QGuiApplication app(argc, argv);
@@ -23,7 +27,8 @@ int main(int argc, char *argv[])
     }, Qt::QueuedConnection);
     engine.load(url);
 
-    DataManagement datamanage;
+
+    engine.rootContext()->setContextProperty( "__datamanage", &datamanage );
     datamanage.SerialStart();
     datamanage.SocketStart();
 

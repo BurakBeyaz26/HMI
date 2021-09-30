@@ -5,6 +5,8 @@ import QtQml 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.12
+import QtGraphicalEffects 1.15
+
 
 ApplicationWindow {
     id:root
@@ -45,7 +47,7 @@ ApplicationWindow {
     StackView
     {
         id:stack
-        initialItem: startScreenView
+        initialItem: mainView
     }
 
 
@@ -93,7 +95,7 @@ ApplicationWindow {
                  anchors.verticalCenter: parent.verticalCenter
                  font.bold: true
                  font.pointSize: 16
-                 color: "#2c8ce0"
+                 color: "#2c81e0"
              }
              font.pixelSize: Qt.application.font.pixelSize * 1.6
              onClicked: {
@@ -108,18 +110,19 @@ ApplicationWindow {
          RowLayout
          {
              anchors.fill: parent
-             spacing: 30
-             anchors.leftMargin: 180
+             spacing: 20
+             anchors.leftMargin: 140
              anchors.rightMargin: 20
              Button
              {
                  id:logoutbtn
                  anchors.right: parent.right
                  anchors.verticalCenter: parent.verticalCenter
-                 width: logoutimage.width
-                 height: logoutimage.height
-                 anchors.rightMargin: 20
+                 width: 30
+                 height: 30
                  anchors.leftMargin: 180
+                 Layout.minimumWidth: 30
+                 Layout.minimumHeight: 40
 
                  background: Rectangle
                  {
@@ -130,17 +133,20 @@ ApplicationWindow {
                      width: 30
                      height: 30
                      id: logoutimage
+                     anchors.verticalCenter: parent.verticalCenter
                      source: "qrc:/Images/logout.svg"
                      sourceSize.width: 30
                      sourceSize.height: 30
                      fillMode: Image.PreserveAspectFit
                  }
 
+
                  onClicked:
                  {
                      Qt.quit()
                  }
              }
+
 
              Row
              {
@@ -225,7 +231,7 @@ ApplicationWindow {
                     text: qsTr("Kontrol")
                     width: parent.width
                     onClicked: {
-                        stack.push(startScreenView)
+                        stack.push(controlScreenView)
                         drawer.close()
                     }
                 }
@@ -255,29 +261,19 @@ ApplicationWindow {
 
     Component
     {
-
         id:mainView
-        Column
+
+        MainView
         {
-            Label
-            {
-                text:"Communication"
-            }
-            Button
-            {
-                text: "<--"
-                onClicked:
-                {
-                    stack.push(startScreenView)
-                }
-            }
+            anchors.horizontalCenter: parent.horizontalCenter
+            stackView: stack
         }
     }
 
     Component
     {
-    id:startScreenView
-        StartScreen
+        id:controlScreenView
+        ControlScreen
         {
             stackView: stack
         }
@@ -285,7 +281,7 @@ ApplicationWindow {
 
     Component
     {
-    id:communicationScreenView
+        id:communicationScreenView
         CommunicationScreen
         {
             stackView: stack

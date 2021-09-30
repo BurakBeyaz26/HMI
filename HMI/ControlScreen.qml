@@ -6,15 +6,15 @@ import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Layouts 1.12
 
-Column {
+ColumnLayout {
 
     property StackView stackView
-
-    Button
-    {
-        onClicked:
-        {
-            stackView.push(mainView)
-        }
+    Text {
+        id: name
+        text: "Control Screen"
+        color: "black"
+        font.bold: true
+        font.pixelSize: 16
     }
+
 }

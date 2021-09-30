@@ -39,6 +39,8 @@ public:
     bool pisconnected = false;
     bool CorrectSystemFlag;
 
+    Q_INVOKABLE void sendSocketMessageJson(QString type,QString topic,QString message);
+
 public slots:
     void onConnected();
     void onDisconnected();
