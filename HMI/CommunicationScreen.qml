@@ -27,6 +27,7 @@ Page {
             onClicked:
             {
                 __datamanage.sendSocketMessageJson("PC","ping","")
+
             }
         }
 

@@ -191,7 +191,6 @@ void DataManagement::sendSocketMessageJson(QString type,QString topic,QString me
             JsonMessagePackage["message"] = message;
             QString strFromObj = QJsonDocument(JsonMessagePackage).toJson(QJsonDocument::Compact);
             server->m_clients.at(order)->sendTextMessage(strFromObj);
-
             if(!server->m_clients.at(order)->errorString().isNull())
             {
                 log.logWork("SendSocketMessageJson - stringmessage - containmessage","true",SocketMessage,"send to --> "+ordername);
@@ -206,6 +205,11 @@ void DataManagement::sendSocketMessageJson(QString type,QString topic,QString me
     }
     else
     {
+        QJsonObject JsonMessagePackage;
+        JsonMessagePackage["topic"] = topic;
+        JsonMessagePackage["message"] = message;
+        QString strFromObj = QJsonDocument(JsonMessagePackage).toJson(QJsonDocument::Compact);
+        serialComm.sendMessage(strFromObj);
         log.logWork("SendSocketMessageJson - stringmessage","false","Confirm: "+is_confirm,"error on send to --> "+ordername+" socket could be off --> undelivered topic: "+topic);
         qDebug() << ordername << " socket could be off is_confirm: " << is_confirm << "undelivered topic: " << topic;
     }

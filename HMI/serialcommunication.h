@@ -16,6 +16,7 @@ public:
     ~SerialCommunication();
     void initSerial();
     void closeSerial();
+    Q_INVOKABLE void sendMessage(QString message);
 
 
 signals:

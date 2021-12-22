@@ -3,6 +3,17 @@
 SerialCommunication::SerialCommunication(QObject *parent) : QObject(parent)
 {
     serial = new QSerialPort(this);
+    QList<QSerialPortInfo> serialports = QSerialPortInfo::availablePorts();
+
+    auto iter = serialports.begin();
+    while(iter != serialports.end())
+    {
+        QSerialPortInfo inf = *iter;
+        qDebug() << "inf: " << inf.description();
+        qDebug() << "manufacturer: " << inf.manufacturer();
+        qDebug() << "name: " << inf.portName();
+        *iter++;
+    }
 }
 
 SerialCommunication::~SerialCommunication()
@@ -12,7 +23,7 @@ SerialCommunication::~SerialCommunication()
 
 void SerialCommunication::initSerial()
 {
-    serial->setPortName("/dev/tty2");
+    serial->setPortName("COM2");
     serial->setBaudRate(QSerialPort::Baud9600);
     serial->setDataBits(QSerialPort::Data8);
     serial->setParity(QSerialPort::NoParity);
@@ -32,5 +43,10 @@ void SerialCommunication::initSerial()
 void SerialCommunication::closeSerial()
 {
      if(serial->isOpen())
-        serial->close();
+         serial->close();
+}
+
+void SerialCommunication::sendMessage(QString message)
+{
+    serial->write(message.toUtf8());
 }
